@@ -1,0 +1,23 @@
+# Pastas de compilação e caches do Gradle
+.gradle/
+build/
+**/build/
+bin/
+
+# Configurações locais da IDE (IntelliJ / VS Code)
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+
+# Arquivos do sistema operacional
+Thumbs.db
+.DS_Store
+
+# Caches de Execução do Minecraft (Onde ficam os seus mundos de teste)
+**/run/
+**/slices/

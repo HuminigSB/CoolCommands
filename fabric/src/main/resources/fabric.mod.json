@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "cool_commands",
+  "version": "${version}",
+  "name": "Cool Commands",
+  "description": "This is a mod to add cool commands, intended to be used with the cci mod.",
+  "authors": [
+    "MrRandon"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/cool_commands/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.mc.commands.cool.fabric.CoolCommandsModFabric"
+    ],
+    "client": [
+      "com.mc.commands.cool.fabric.client.CoolCommandsModFabricClient"
+    ]
+  },
+  "mixins": [
+    "cool_commands.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "architectury": ">=13.0.8",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
