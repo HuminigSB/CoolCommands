@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.mc.commands.cool.SavedData.JailEventSavedData;
 import com.mc.commands.cool.models.Heads;
 
 import net.minecraft.core.BlockPos;
@@ -127,6 +128,12 @@ public class JailEventManager {
                 JailEvent.MOBS_ALVOS.put(mob.getUUID(), true); 
             }
         }
+        try {
+            JailEventSavedData.get(overworld).setDirty();
+        } catch (Exception e) {
+            server.sendSystemMessage(Component.literal("§c[CoolCommands] Erro ao salvar dados do evento!"));
+            e.printStackTrace();
+        }
     }
 
     public static void verificarFimDoEvento(MinecraftServer server) {
@@ -152,5 +159,6 @@ public class JailEventManager {
         }
 
         JailEvent.reset();
+        JailEventSavedData.get(overworld).setDirty();
     }
 }
