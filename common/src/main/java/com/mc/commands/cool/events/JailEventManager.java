@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.mc.commands.cool.models.Heads;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
@@ -13,7 +15,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
@@ -106,15 +110,19 @@ public class JailEventManager {
         for (int i = 0; i < quantiaMobs; i++) {
             Entity entidade = tipoMob.create(overworld);
             if (entidade instanceof Mob mob) {
-                //mudar para pegar pelo tamanho da estrutura ao invez de valor fixo em caso de estrutura carregada
-                double spawnX = (overworld.random.nextDouble() * 40) - 20;
-                double spawnZ = (overworld.random.nextDouble() * 40) - 20;
+                //spawna nos 10 blocos em volta do spawn do player
+                double spawnX = spawnJail.getX() + (overworld.random.nextDouble() * 20) - 10;
+                double spawnZ = spawnJail.getZ() + (overworld.random.nextDouble() * 20) - 10;
                 mob.moveTo(spawnX, 171.0, spawnZ, 0.0F, 0.0F);
                 
                 mob.setCustomName(Component.literal("§4§l[JAIL TARGET]"));
-                mob.setCustomNameVisible(true);
+                mob.setCustomNameVisible(true);//mostra o nome
                 mob.setPersistenceRequired(); 
                 
+                ItemStack head = Heads.getInstance().getRandomHead(overworld);//pega cabeça aleatoria de player online
+                mob.setItemSlot(EquipmentSlot.HEAD, head);
+                mob.setDropChance(EquipmentSlot.HEAD, 0.085F);
+
                 overworld.addFreshEntity(mob);
                 JailEvent.MOBS_ALVOS.put(mob.getUUID(), true); 
             }
