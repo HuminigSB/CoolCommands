@@ -5,6 +5,8 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mc.commands.cool.events.JailEventManager;
+import com.mc.commands.cool.utils.PresetsLoader;
+
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -25,6 +27,19 @@ public class JailCommand {
                     )
                 )
         );
+
+        PresetsLoader loader = PresetsLoader.getInstance();
+
+        dispatcher.register(
+            Commands.literal("jailPreset")
+                .requires(source -> source.hasPermission(2))
+                .then(Commands.argument("mobPreset", IntegerArgumentType.integer(-1, loader.loadPresetMobs().size() - 1))
+                    .executes(ctx -> executePresetJail(ctx, false))
+                    .then(Commands.argument("mobAmount", IntegerArgumentType.integer(-1, 100))
+                        .executes(ctx -> executePresetJail(ctx, true))
+                    )
+                )
+        );
     }
 
     private static int executeJail(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
@@ -32,7 +47,16 @@ public class JailCommand {
         Holder.Reference<EntityType<?>> mobHolder = ResourceArgument.getResource(context, "mob", Registries.ENTITY_TYPE);
         EntityType<?> tipoMob = mobHolder.value();
         MinecraftServer server = context.getSource().getServer();
-        JailEventManager.iniciarJail(server, quantia, tipoMob);
+        JailEventManager.startJail(server, quantia, tipoMob);
+
+        return 1;
+    }
+
+    private static int executePresetJail(CommandContext<CommandSourceStack> context, boolean hasAmount) throws CommandSyntaxException {
+        int mobIndex = IntegerArgumentType.getInteger(context, "mobPreset");
+        int amount = hasAmount ? IntegerArgumentType.getInteger(context, "mobAmount") : -1;
+        MinecraftServer server = context.getSource().getServer();
+        JailEventManager.startPresetJail(server, mobIndex, amount);
 
         return 1;
     }
