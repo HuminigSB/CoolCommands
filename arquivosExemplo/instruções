@@ -1,0 +1,9 @@
+Para as gaiolas personalizadas devem ser adicionados os arquivos .nbt no caminho:
+[pasta do mundo]\generated\minecraft\structures
+para o comando /jail que pega estrutura aleatoria precisa possuir nbts com nome jail_[numero].nbt sendo que o numero deve ser ordinal começando em 1;
+
+Para o preset.json deve ser colocado no caminho:
+[pasta da instancia]\config
+e precisa obrigatoriamente possuir os campos:
+    mobs
+        mob

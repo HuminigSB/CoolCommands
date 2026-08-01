@@ -1,0 +1,35 @@
+{
+    "mobs": [
+        {
+            "mob": "minecraft:skeleton",
+            "showName": true,
+            "name": "§cGuardião da Prisão",
+            "amount": 5,
+            "equipment": {
+                "mainhand": "minecraft:diamond_sword",
+                "offhand": "minecraft:shield",
+                "head": "minecraft:iron_helmet"
+            }
+        },
+        {
+            "mob": "minecraft:pillager",
+            "showName": true,
+            "name": "§4Executor",
+            "amount": 3,
+            "equipment": {
+                "mainhand": "minecraft:crossbow"
+            },
+            "mount": "minecraft:horse"
+        }
+    ],
+    "jails": [
+        {
+            "name": "Jail_1",
+            "spawn": {
+                "x": 13.5,
+                "y": 169,
+                "z": 13.5
+            }
+        }
+    ]
+}
