@@ -18,6 +18,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
@@ -119,6 +120,13 @@ public class JailEventManager {
                 mob.setCustomName(Component.literal("§4§l[JAIL TARGET]"));
                 mob.setCustomNameVisible(true);//mostra o nome
                 mob.setPersistenceRequired(); 
+
+                mob.finalizeSpawn(
+                    overworld,
+                    overworld.getCurrentDifficultyAt(mob.blockPosition()),
+                    MobSpawnType.EVENT,
+                    null
+                );
                 
                 ItemStack head = Heads.getInstance().getRandomHead(overworld);//pega cabeça aleatoria de player online
                 mob.setItemSlot(EquipmentSlot.HEAD, head);
