@@ -2,7 +2,6 @@ package com.mc.commands.cool.models;
 import java.util.List;
 import java.util.Optional;
 
-import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.PropertyMap;
 
 import net.minecraft.core.component.DataComponents;
