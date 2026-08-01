@@ -42,7 +42,7 @@ public class JailEventManager {
         int idJailCheck = 1;
 
         while (true) {
-            ResourceLocation jailId = ResourceLocation.fromNamespaceAndPath("cool_commands", "jail_" + idJailCheck);
+            ResourceLocation jailId = ResourceLocation.fromNamespaceAndPath("minecraft", "jail_" + idJailCheck);
             Optional<StructureTemplate> checK = templateManager.get(jailId);
             if (checK.isPresent()) {
                 jails.add(jailId);
@@ -104,7 +104,7 @@ public class JailEventManager {
                 player.isRespawnForced()
             ));
             player.setRespawnPosition(overworld.dimension(), spawnJail, 0.0F, true, false);
-            player.teleportTo(overworld, 0.0, 170.0, 0.0, 0.0F, 0.0F);
+            player.teleportTo(overworld, spawnJail.getX() + 0.5D, spawnJail.getY(), spawnJail.getZ() + 0.5D, 0.0F, 0.0F);
             player.sendSystemMessage(Component.literal("§c§lJAIL! §7Sobreviva e mate todos os alvos para escapar!"));
         }
 
@@ -114,7 +114,7 @@ public class JailEventManager {
                 //spawna nos 10 blocos em volta do spawn do player
                 double spawnX = spawnJail.getX() + (overworld.random.nextDouble() * 20) - 10;
                 double spawnZ = spawnJail.getZ() + (overworld.random.nextDouble() * 20) - 10;
-                mob.moveTo(spawnX, 171.0, spawnZ, 0.0F, 0.0F);
+                mob.moveTo(spawnX, spawnJail.getY(), spawnZ, 0.0F, 0.0F);
                 
                 mob.setCustomName(Component.literal("§4§l[JAIL TARGET]"));
                 mob.setCustomNameVisible(true);//mostra o nome
