@@ -41,15 +41,10 @@ public final class CoolCommandsMod {
         });
 
         dev.architectury.event.events.common.EntityEvent.LIVING_DEATH.register((entity, source) -> {
-            // Se o evento não está ativo, ignora
             if (!JailEvent.isActive) return dev.architectury.event.EventResult.pass();
 
-            // Se a entidade que morreu está registrada na nossa lista de alvos da Jail
             if (JailEvent.MOBS_ALVOS.containsKey(entity.getUUID())) {
-                // Marca o mob como morto (false)
                 JailEvent.MOBS_ALVOS.put(entity.getUUID(), false);
-                
-                // Avisa o servidor para checar se todos já morreram
                 MinecraftServer server = entity.getServer();
                 if (server != null) {
                     JailEventManager.verificarFimDoEvento(server);
