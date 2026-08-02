@@ -12,8 +12,10 @@ import com.mc.commands.cool.commands.ResizeCommand;
 import com.mc.commands.cool.events.JailEvent;
 import com.mc.commands.cool.events.JailEventManager;
 
+import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.BlockEvent;
 import dev.architectury.event.events.common.CommandRegistrationEvent;
+import dev.architectury.event.events.common.EntityEvent;
 import dev.architectury.event.events.common.ExplosionEvent;
 import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.event.events.common.TickEvent;
@@ -40,8 +42,8 @@ public final class CoolCommandsMod {
             ExplosionEvent.PRE.register(JailProtectionHandler::onExplosionDetonate);
         });
 
-        dev.architectury.event.events.common.EntityEvent.LIVING_DEATH.register((entity, source) -> {
-            if (!JailEvent.isActive) return dev.architectury.event.EventResult.pass();
+        EntityEvent.LIVING_DEATH.register((entity, source) -> {
+            if (!JailEvent.isActive) return EventResult.pass();
 
             if (JailEvent.MOBS_ALVOS.containsKey(entity.getUUID())) {
                 JailEvent.MOBS_ALVOS.put(entity.getUUID(), false);
@@ -50,7 +52,7 @@ public final class CoolCommandsMod {
                     JailEventManager.verificarFimDoEvento(server);
                 }
             }
-            return dev.architectury.event.EventResult.pass();
+            return EventResult.pass();
         });
     }
 }
