@@ -2,8 +2,11 @@ package com.mc.commands.cool.utils;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.Writer;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -25,9 +28,29 @@ public class PresetsLoader {
 
     public List<PresetMob> loadPresetMobs() {
         Gson gson = new Gson();
-        try (Reader reader = Files.newBufferedReader(Paths.get("config/presets.json"))) {
-            PresetJson presets = gson.fromJson(reader, PresetJson.class);
-            this.presetMobs = presets.mobs;
+        Path configPath = Paths.get("config");
+        Path presetsPath = configPath.resolve("presets.json");
+        try{
+            if (!Files.exists(configPath)) {
+                Files.createDirectories(configPath);
+            }
+            if (!Files.exists(presetsPath)) {
+                PresetJson defaultPresets = new PresetJson(); 
+                defaultPresets.mobs = new ArrayList<>(); 
+                PresetMob defaultMob = new PresetMob();
+                defaultMob.mob = "minecraft:zombie";
+                defaultMob.showName = true;
+                defaultMob.name = "Jail Target";
+                defaultMob.amount = 5;
+                defaultPresets.mobs.add(defaultMob);
+                try (Writer writer = Files.newBufferedWriter(presetsPath)) {
+                    gson.toJson(defaultPresets, writer);
+                }
+            }
+            try (Reader reader = Files.newBufferedReader(Paths.get("config/presets.json"))) {
+                PresetJson presets = gson.fromJson(reader, PresetJson.class);
+                this.presetMobs = presets.mobs;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
