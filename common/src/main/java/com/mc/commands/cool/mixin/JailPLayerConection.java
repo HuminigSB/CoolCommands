@@ -1,6 +1,5 @@
 package com.mc.commands.cool.mixin;
 
-import com.mc.commands.cool.SavedData.JailEventSavedData;
 import com.mc.commands.cool.events.JailEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -25,8 +24,6 @@ public class JailPLayerConection {
                 
                 player.setRespawnPosition(backup.respawnDim(), backup.respawnPos(), 0.0F, backup.respawnForced(), false);
                 player.teleportTo(destino, backup.x(), backup.y(), backup.z(), backup.yRot(), backup.xRot());
-                
-                JailEventSavedData.get(player.server.overworld()).setDirty();
             }
         }
     }
@@ -50,8 +47,6 @@ public class JailPLayerConection {
                 player.setRespawnPosition(overworld.dimension(), spawnJail, 0.0F, true, false);
                 player.teleportTo(overworld, 0.0, 170.0, 0.0, 0.0F, 0.0F);
                 player.sendSystemMessage(Component.literal("§c§lJAIL! §7Você retornou ao evento pendente!"));
-                
-                JailEventSavedData.get(overworld).setDirty();
             }
         }
     }

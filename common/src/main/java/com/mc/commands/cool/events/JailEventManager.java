@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.mc.commands.cool.SavedData.JailEventSavedData;
 import com.mc.commands.cool.models.Heads;
 import com.mc.commands.cool.models.presets.PresetMob;
 import com.mc.commands.cool.utils.PresetsLoader;
@@ -138,12 +137,6 @@ public class JailEventManager {
                 overworld.addFreshEntity(mob);
                 JailEvent.MOBS_ALVOS.put(mob.getUUID(), true); 
             }
-        }
-        try {
-            JailEventSavedData.get(overworld).setDirty();
-        } catch (Exception e) {
-            server.sendSystemMessage(Component.literal("§c[CoolCommands] Erro ao salvar dados do evento!"));
-            e.printStackTrace();
         }
     }
 
@@ -322,12 +315,6 @@ public class JailEventManager {
                 JailEvent.MOBS_ALVOS.put(mob.getUUID(), true); 
             }
         }
-        try {
-            JailEventSavedData.get(overworld).setDirty();
-        } catch (Exception e) {
-            server.sendSystemMessage(Component.literal("§c[CoolCommands] Erro ao salvar dados do evento!"));
-            e.printStackTrace();
-        }
     }
 
     public static void verificarFimDoEvento(MinecraftServer server) {
@@ -353,6 +340,5 @@ public class JailEventManager {
         }
 
         JailEvent.reset();
-        JailEventSavedData.get(overworld).setDirty();
     }
 }
